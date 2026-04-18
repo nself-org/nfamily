@@ -1,0 +1,59 @@
+# AI working memory
+.claude/
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Pods/
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+android/.gradle/
+android/local.properties
+android/**/build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / web
+node_modules/
+.next/
+dist/
+out/
+
+# Secrets
+.env
+.env.local
+.env.*.local
+*.p12
+*.jks
+*.keystore
+
+# Logs
+*.log
+npm-debug.log*
+.vscode/*
+.codex/
+.cursor/
+.aider/
+.aider.chat.history.md
+.continue/
+.windsurf/
+.gemini/
+.codeium/
