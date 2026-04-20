@@ -20,7 +20,37 @@ The family tree engine (`family` plugin) is GEDCOM 5.5.1-compatible, so you can 
 
 ## Install
 
-Coming in v1.0.0. For now, follow the nSelf ecosystem roadmap.
+**Status: Not yet available.** Full v1.0.0 ships in a future release. Backend scaffold + Flutter app are in progress.
+
+When v1.0.0 ships, installation will follow the standard nSelf pattern:
+
+```bash
+# 1. Install nSelf CLI
+brew tap nself-org/nself && brew install nself
+
+# 2. Initialize a new nSelf project
+mkdir my-nfamily && cd my-nfamily
+nself init
+
+# 3. Install the nFamily plugin bundle (requires $0.99/mo or ɳSelf+ license)
+nself license set nself_pro_xxxxxxxx...
+nself plugin install family family-geni social photos activity-feed moderation realtime cms chat
+
+# 4. Build + start the backend
+nself build
+nself start
+
+# 5. Run the Flutter app
+flutter run
+```
+
+**Install failure troubleshooting:**
+- License error: verify your key at https://nself.org/account
+- Plugin not found: update nSelf CLI (`brew upgrade nself`)
+- Backend offline: check `nself status` for service health
+- App cannot connect: confirm `NSELF_API_URL` env var points to your backend
+
+For now, see the [nSelf ecosystem roadmap](https://nself.org) for the timeline.
 
 ## License
 
