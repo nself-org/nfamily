@@ -1,0 +1,37 @@
+name: Clean Working Tree
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Forbid disallowed files (root + tracked junk)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Forbid markdown at repo root other than README.md
+        run: |
+          OFFENDERS=$(find . -maxdepth 1 -name '*.md' ! -name 'README.md' -type f | sort)
+          if [ -n "$OFFENDERS" ]; then
+            echo "::error::Disallowed markdown files at repo root:"
+            echo "$OFFENDERS"
+            exit 1
+          fi
+
+      - name: Forbid tracked .DS_Store
+        run: |
+          if git ls-files | grep -q '\.DS_Store'; then
+            echo "::error::.DS_Store tracked in git. Run: git rm --cached .DS_Store"
+            exit 1
+          fi
+
+      - name: Forbid tracked secrets
+        run: |
+          OFFENDERS=$(git ls-files | grep -E '^\.env$|^\.env\.local$|^\.env\.secrets$|\.pem$|\.key$' || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "::error::Secret files tracked in git:"
+            echo "$OFFENDERS"
+            exit 1
+          fi
