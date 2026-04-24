@@ -13,7 +13,7 @@ class NFamilyApp extends StatelessWidget {
       title: 'nFamily',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0x6366F1FF),
+          seedColor: const Color(0xFF6366F1),
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
