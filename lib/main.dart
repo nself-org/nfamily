@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'theme/brand_colors.dart';
+import 'screens/auth_screen.dart';
 
 void main() {
-  runApp(const NFamilyApp());
+  runApp(const ProviderScope(child: NFamilyApp()));
 }
 
+/// nFamily app — pre-alpha scaffold (v0.1.0).
+///
+/// Status: pre-alpha. Full family social + genealogy build targets v1.2.0.
+/// This scaffold wires auth, routing, and sky-500 brand theme.
 class NFamilyApp extends StatelessWidget {
   const NFamilyApp({super.key});
 
@@ -11,21 +20,31 @@ class NFamilyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'nFamily',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6366F1),
+          seedColor: NselfBrandColors.primary,
           brightness: Brightness.dark,
         ),
+        scaffoldBackgroundColor: NselfBrandColors.background,
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'nFamily — coming soon',
-            style: TextStyle(fontSize: 24),
-          ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: NselfBrandColors.primary,
+          brightness: Brightness.dark,
         ),
+        scaffoldBackgroundColor: NselfBrandColors.background,
+        useMaterial3: true,
       ),
+      themeMode: ThemeMode.dark,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en')],
+      home: const AuthScreen(),
     );
   }
 }
