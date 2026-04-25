@@ -1,0 +1,27 @@
+{
+  "@@locale": "de",
+  "@@last_modified": "2026-04-24",
+
+  "appTitle": "nFamily",
+  "signIn": "Anmelden",
+  "signUp": "Registrieren",
+  "forgotPassword": "Passwort vergessen?",
+  "settings": "Einstellungen",
+  "logout": "Abmelden",
+  "home": "Startseite",
+  "family": "Familie",
+  "photos": "Fotos",
+  "activity": "Aktivität",
+  "profile": "Profil",
+  "editProfile": "Profil bearbeiten",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "delete": "Löschen",
+  "confirm": "Bestätigen",
+  "loading": "Laden…",
+  "error": "Ein Fehler ist aufgetreten",
+  "retry": "Erneut versuchen",
+  "welcomeBack": "Willkommen zurück, {name}!",
+  "inviteMember": "Mitglied einladen",
+  "memberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}"
+}

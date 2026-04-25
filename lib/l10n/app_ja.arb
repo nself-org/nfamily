@@ -1,0 +1,27 @@
+{
+  "@@locale": "ja",
+  "@@last_modified": "2026-04-24",
+
+  "appTitle": "nFamily",
+  "signIn": "サインイン",
+  "signUp": "新規登録",
+  "forgotPassword": "パスワードをお忘れですか？",
+  "settings": "設定",
+  "logout": "ログアウト",
+  "home": "ホーム",
+  "family": "ファミリー",
+  "photos": "写真",
+  "activity": "アクティビティ",
+  "profile": "プロフィール",
+  "editProfile": "プロフィールを編集",
+  "save": "保存",
+  "cancel": "キャンセル",
+  "delete": "削除",
+  "confirm": "確認",
+  "loading": "読み込み中…",
+  "error": "問題が発生しました",
+  "retry": "再試行",
+  "welcomeBack": "おかえりなさい、{name}さん！",
+  "inviteMember": "メンバーを招待",
+  "memberCount": "{count, plural, other{{count}人のメンバー}}"
+}

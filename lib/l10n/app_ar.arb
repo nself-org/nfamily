@@ -1,0 +1,27 @@
+{
+  "@@locale": "ar",
+  "@@last_modified": "2026-04-24",
+
+  "appTitle": "nFamily",
+  "signIn": "تسجيل الدخول",
+  "signUp": "إنشاء حساب",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "settings": "الإعدادات",
+  "logout": "تسجيل الخروج",
+  "home": "الرئيسية",
+  "family": "العائلة",
+  "photos": "الصور",
+  "activity": "النشاط",
+  "profile": "الملف الشخصي",
+  "editProfile": "تعديل الملف الشخصي",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "confirm": "تأكيد",
+  "loading": "جارٍ التحميل…",
+  "error": "حدث خطأ ما",
+  "retry": "إعادة المحاولة",
+  "welcomeBack": "مرحباً بعودتك، {name}!",
+  "inviteMember": "دعوة عضو",
+  "memberCount": "{count, plural, =0{لا أعضاء} =1{عضو واحد} =2{عضوان} few{{count} أعضاء} many{{count} عضواً} other{{count} عضو}}"
+}

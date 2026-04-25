@@ -1,0 +1,125 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2026-04-24",
+
+  "appTitle": "nFamily",
+  "@appTitle": {
+    "description": "The application title"
+  },
+
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Label for the sign-in action"
+  },
+
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Label for the sign-up action"
+  },
+
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Label for the forgot-password link"
+  },
+
+  "settings": "Settings",
+  "@settings": {
+    "description": "Label for the settings screen"
+  },
+
+  "logout": "Log Out",
+  "@logout": {
+    "description": "Label for the logout action"
+  },
+
+  "home": "Home",
+  "@home": {
+    "description": "Label for the home tab"
+  },
+
+  "family": "Family",
+  "@family": {
+    "description": "Label for the family section"
+  },
+
+  "photos": "Photos",
+  "@photos": {
+    "description": "Label for the photos section"
+  },
+
+  "activity": "Activity",
+  "@activity": {
+    "description": "Label for the activity feed section"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "Label for the profile section"
+  },
+
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Label for the edit-profile action"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Generic save action label"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Generic cancel action label"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Generic delete action label"
+  },
+
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Generic confirm action label"
+  },
+
+  "loading": "Loading…",
+  "@loading": {
+    "description": "Generic loading placeholder text"
+  },
+
+  "error": "Something went wrong",
+  "@error": {
+    "description": "Generic error message"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry action label"
+  },
+
+  "welcomeBack": "Welcome back, {name}!",
+  "@welcomeBack": {
+    "description": "Personalised welcome message",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Ali"
+      }
+    }
+  },
+
+  "inviteMember": "Invite Member",
+  "@inviteMember": {
+    "description": "Action to invite a new family member"
+  },
+
+  "memberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "@memberCount": {
+    "description": "Family member count with pluralisation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}
