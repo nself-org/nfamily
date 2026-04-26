@@ -23,6 +23,10 @@ jobs:
           flutter-version: '3.x'
           channel: 'stable'
 
+      - name: Configure git for private repos
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - name: Install dependencies
         run: flutter pub get
 
