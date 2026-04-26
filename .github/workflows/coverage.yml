@@ -23,10 +23,15 @@ jobs:
           flutter-version: '3.x'
           channel: 'stable'
 
-      - name: Configure git authentication for private repos
+      - name: Configure .netrc for GitHub access
         run: |
-          BASIC_AUTH=$(echo -n "x-oauth-basic:${{ secrets.GITHUB_TOKEN }}" | base64)
-          git config --global http."https://github.com/".extraheader "Authorization: Basic ${BASIC_AUTH}"
+          mkdir -p ~/.ssh
+          cat > ~/.netrc << EOF
+          machine github.com
+          login x-oauth-basic
+          password ${{ secrets.GITHUB_TOKEN }}
+          EOF
+          chmod 600 ~/.netrc
 
       - name: Install dependencies
         run: flutter pub get
