@@ -19,8 +19,8 @@ dependencies:
   go_router: ^13.0.0
   shared_preferences: ^2.2.0
   flutter_secure_storage: ^9.0.0
-  nself_auth_sdk:
-    path: plugins-pro/paid/auth/flutter
+  # nself_auth_sdk: deferred until full dev phase (P-FAM-4+)
+  # will be added via path: plugins-pro/paid/auth/flutter after SDK scaffold complete
 
 dev_dependencies:
   flutter_test:
