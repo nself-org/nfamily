@@ -20,7 +20,9 @@ dependencies:
   shared_preferences: ^2.2.0
   flutter_secure_storage: ^9.0.0
   nself_auth_sdk:
-    path: ../plugins-pro/paid/auth/flutter
+    git:
+      url: https://github.com/nself-org/plugins-pro.git
+      path: paid/auth/flutter
 
 dev_dependencies:
   flutter_test:
