@@ -23,11 +23,10 @@ jobs:
           flutter-version: '3.x'
           channel: 'stable'
 
-      - name: Configure git credentials for private repos
+      - name: Configure git authentication for private repos
         run: |
-          git config --global credential.helper store
-          echo "https://${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com" > ~/.git-credentials
-          chmod 600 ~/.git-credentials
+          BASIC_AUTH=$(echo -n "x-oauth-basic:${{ secrets.GITHUB_TOKEN }}" | base64)
+          git config --global http."https://github.com/".extraheader "Authorization: Basic ${BASIC_AUTH}"
 
       - name: Install dependencies
         run: flutter pub get
