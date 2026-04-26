@@ -187,7 +187,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 ),
                 child: const Text(
                   'nFamily is in pre-alpha. Requires an nSelf backend with the '
-                  'nFamily plugin bundle ($0.99/mo or included in ɳSelf+).',
+                  'nFamily plugin bundle (\$0.99/mo or included in nSelf+).',
                   style: TextStyle(fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
