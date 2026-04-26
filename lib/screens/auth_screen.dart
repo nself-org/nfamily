@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nself_auth_sdk/nself_auth_sdk.dart';
 
 import '../theme/brand_colors.dart';
 
 /// nFamily auth screen — pre-alpha scaffold.
 ///
-/// Displays the nSelf auth SDK sign-in flow. On successful authentication
-/// the user is forwarded to the (planned) home screen.
+/// Placeholder screen during scaffolding phase. SDK integration deferred to P-FAM-4+.
+/// Full authentication flow with NselfAuthClient will be implemented during development phase.
 ///
-/// Status: pre-alpha. Full family social features target v1.2.0.
+/// Status: scaffolding. Full family social features target v1.2.0.
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
@@ -44,15 +43,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       _error = null;
     });
     try {
-      final client = NselfAuthClient(baseUrl: _serverController.text.trim());
-      await client.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
+      // TODO(P-FAM-4): integrate NselfAuthClient from nself_auth_sdk plugin bundle.
+      // Placeholder: simulate auth flow during scaffolding phase.
+      await Future.delayed(const Duration(milliseconds: 500));
       if (mounted) {
-        // TODO(v1.2.0): navigate to HomeScreen once implemented.
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Signed in — full app coming in v1.2.0')),
+          const SnackBar(content: Text('Auth SDK coming in v1.0.0 (P-FAM-4+)')),
         );
       }
     } catch (e) {
