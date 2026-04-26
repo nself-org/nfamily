@@ -13,15 +13,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Configure .netrc for GitHub access
-        run: |
-          mkdir -p ~/.ssh
-          cat > ~/.netrc << EOF
-          machine github.com
-          login x-oauth-basic
-          password ${{ secrets.GITHUB_TOKEN }}
-          EOF
-          chmod 600 ~/.netrc
+      - name: Configure git for private repo access
+        run: git config --global url."https://x-access-token:${{ secrets.PLUGINS_PRO_TOKEN }}@github.com/".insteadOf "https://github.com/"
       - name: Get dependencies
         run: flutter pub get
       - name: Analyze
