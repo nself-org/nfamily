@@ -13,9 +13,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Configure git for private repos
+      - name: Configure git credentials for private repos
         run: |
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global credential.helper store
+          echo "https://${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com" > ~/.git-credentials
+          chmod 600 ~/.git-credentials
       - name: Get dependencies
         run: flutter pub get
       - name: Analyze
