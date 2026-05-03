@@ -12,6 +12,6 @@ jobs:
     name: Verify doc sync (placeholder — no user-visible surface yet)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Check README exists
         run: test -f README.md
