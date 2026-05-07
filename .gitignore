@@ -50,6 +50,7 @@ out/
 npm-debug.log*
 .vscode/*
 .codex/
+.ai/
 .cursor/
 .aider/
 .aider.chat.history.md
