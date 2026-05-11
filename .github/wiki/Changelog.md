@@ -7,6 +7,26 @@ Version numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 ---
 
+## [1.0.0] — PENDING (v1.1.0 ecosystem release)
+
+First stable release. ɳFamily bundle ratified. Private family social app for iOS, Android, macOS, Linux, Windows, web.
+
+### Added
+
+- **Full Flutter app**: screens for social feed, photo albums, activity feed, family tree (GEDCOM), family chat, shared calendar, location sharing.
+- **ɳFamily bundle integration**: connects to all 9 backend plugins (social, photos, activity-feed, moderation, realtime, cms, chat, geolocation, calendar). Requires nFamily bundle ($0.99/mo / $9.99/yr) or ɳSelf+ ($3.99/mo / $39.99/yr).
+- **CSAM protection**: moderation plugin's PhotoDNA scanner runs on all uploaded photos automatically; user is never shown flagged content.
+- **Web SaaS**: `family.nself.org` (web/nfamily) launches at v1.1.0.
+- **`nself bundle install family` support**: installs all 9 ɳFamily plugins.
+- **Demo mode**: read-only "demo tree" for users without a bundle license.
+- **Multi-app isolation**: all data partitioned by `source_account_id`.
+
+### Changed
+
+- Minimum nSelf CLI version: v1.1.0.
+
+---
+
 ## [Unreleased]
 
 ### Added
