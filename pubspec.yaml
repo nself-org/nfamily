@@ -1,7 +1,7 @@
 name: nfamily
 description: Private family social + genealogy platform. Self-hosted Flutter app powered by nSelf.
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.1+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
