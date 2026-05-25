@@ -1,24 +1,21 @@
 # AI working memory
 .claude/
 
-# Flutter
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-build/
-coverage/
-ios/Flutter/Generated.xcconfig
-ios/Flutter/flutter_export_environment.sh
+# Flutter (removed — app migrated to React Native Expo in T-E1-04)
+# .dart_tool/ .flutter-plugins .pub/ build/ etc. no longer applicable
+
+# React Native / Expo
+.expo/
+.expo-shared/
 ios/Pods/
-macos/Flutter/ephemeral/
-windows/flutter/ephemeral/
-linux/flutter/ephemeral/
+ios/.xcode.env.local
 android/.gradle/
 android/local.properties
-android/**/build/
+android/app/google-services.json
+ios/GoogleService-Info.plist
+
+# Metro bundler
+.metro-health-check*
 
 # IDE
 .idea/
