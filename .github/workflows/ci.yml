@@ -8,19 +8,20 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  analyze:
-    name: Flutter analyze
+  lint-and-test:
+    name: Lint and test (RN/Expo)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: actions/setup-node@v4
         with:
-          channel: stable
-      - name: Configure git for private repo access
-        run: git config --global url."https://x-access-token:${{ secrets.PLUGINS_PRO_TOKEN }}@github.com/".insteadOf "https://github.com/"
-      - name: Get dependencies
-        run: flutter pub get
-      - name: Analyze
-        run: flutter analyze --no-fatal-warnings
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
       - name: Run tests
-        run: flutter test
+        run: pnpm test
