@@ -1,4 +1,4 @@
-name: Flutter Coverage Gate (nfamily)
+name: JS Coverage Gate (nfamily)
 
 on:
   push:
@@ -13,7 +13,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  flutter-coverage:
+  js-coverage:
     name: Flutter coverage gate (nfamily)
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -21,43 +21,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - uses: actions/setup-node@v4
         with:
-          flutter-version: '3.x'
-          channel: 'stable'
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: flutter pub get
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests with coverage
-        run: flutter test --coverage || true
+        run: pnpm test -- --coverage --coverageReporters=text-summary --coverageReporters=json-summary || true
 
       - name: Enforce coverage floor (>=30%)
         run: |
-          if [ ! -f coverage/lcov.info ]; then
-            echo "WARN: no coverage data — skipping floor check (no tests ran)"
+          SUMMARY="coverage/coverage-summary.json"
+          if [ ! -f "$SUMMARY" ]; then
+            echo "WARN: no coverage summary found — skipping floor check (no tests ran)"
             exit 0
           fi
-          total=$(grep '^LF:' coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
-          covered=$(grep '^LH:' coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
 
-          if [ -z "$total" ] || [ "$total" -eq 0 ]; then
+          pct=$(node -e "const s=require('./$SUMMARY'); const t=s.total.lines; console.log(t ? t.pct.toFixed(1) : '0.0')")
+
+          if [ -z "$pct" ] || [ "$pct" = "0.0" ]; then
             echo "WARN: no line data in coverage report — skipping floor check"
             exit 0
           fi
 
-          pct=$(awk -v c="$covered" -v t="$total" 'BEGIN { printf "%.1f", (c/t)*100 }')
-          echo "Flutter coverage: ${pct}% (${covered}/${total} lines)"
+          echo "JS coverage: ${pct}%"
 
-          result=$(awk -v pct="$pct" -v floor="$COVERAGE_FLOOR" 'BEGIN { print (pct+0 >= floor+0) ? "pass" : "fail" }')
-          if [ "$result" = "fail" ]; then
+          result=$(node -e "process.exit(parseFloat('$pct') >= $COVERAGE_FLOOR ? 0 : 1)" 2>&1) && echo "PASS: Coverage ${pct}% >= floor ${COVERAGE_FLOOR}%" || {
             echo "FAIL: Coverage ${pct}% is below floor ${COVERAGE_FLOOR}%" >&2
             exit 1
-          fi
-          echo "PASS: Coverage ${pct}% >= floor ${COVERAGE_FLOOR}%"
+          }
 
       - name: Coverage summary
         if: always()
         run: |
-          echo "### nfamily Flutter Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo "### nfamily JS Coverage" >> "$GITHUB_STEP_SUMMARY"
           echo "Floor: ${COVERAGE_FLOOR}%" >> "$GITHUB_STEP_SUMMARY"
