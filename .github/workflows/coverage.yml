@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   js-coverage:
-    name: Flutter coverage gate (nfamily)
+    name: RN/Expo coverage gate (nfamily)
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -33,32 +33,34 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run tests with coverage
-        run: pnpm test -- --coverage --coverageReporters=text-summary --coverageReporters=json-summary || true
+        run: pnpm test --coverage || true
 
       - name: Enforce coverage floor (>=30%)
         run: |
-          SUMMARY="coverage/coverage-summary.json"
-          if [ ! -f "$SUMMARY" ]; then
-            echo "WARN: no coverage summary found — skipping floor check (no tests ran)"
+          if [ ! -f coverage/lcov.info ]; then
+            echo "WARN: no coverage data — skipping floor check (no tests ran)"
             exit 0
           fi
+          total=$(grep '^LF:' coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
+          covered=$(grep '^LH:' coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
 
-          pct=$(node -e "const s=require('./$SUMMARY'); const t=s.total.lines; console.log(t ? t.pct.toFixed(1) : '0.0')")
-
-          if [ -z "$pct" ] || [ "$pct" = "0.0" ]; then
+          if [ -z "$total" ] || [ "$total" -eq 0 ]; then
             echo "WARN: no line data in coverage report — skipping floor check"
             exit 0
           fi
 
-          echo "JS coverage: ${pct}%"
+          pct=$(awk -v c="$covered" -v t="$total" 'BEGIN { printf "%.1f", (c/t)*100 }')
+          echo "RN/Expo coverage: ${pct}% (${covered}/${total} lines)"
 
-          result=$(node -e "process.exit(parseFloat('$pct') >= $COVERAGE_FLOOR ? 0 : 1)" 2>&1) && echo "PASS: Coverage ${pct}% >= floor ${COVERAGE_FLOOR}%" || {
+          result=$(awk -v pct="$pct" -v floor="$COVERAGE_FLOOR" 'BEGIN { print (pct+0 >= floor+0) ? "pass" : "fail" }')
+          if [ "$result" = "fail" ]; then
             echo "FAIL: Coverage ${pct}% is below floor ${COVERAGE_FLOOR}%" >&2
             exit 1
-          }
+          fi
+          echo "PASS: Coverage ${pct}% >= floor ${COVERAGE_FLOOR}%"
 
       - name: Coverage summary
         if: always()
         run: |
-          echo "### nfamily JS Coverage" >> "$GITHUB_STEP_SUMMARY"
+          echo "### nfamily RN/Expo Coverage" >> "$GITHUB_STEP_SUMMARY"
           echo "Floor: ${COVERAGE_FLOOR}%" >> "$GITHUB_STEP_SUMMARY"

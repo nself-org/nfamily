@@ -1,9 +1,7 @@
 # AI working memory
 .claude/
 
-# Flutter (removed — app migrated to React Native Expo in T-E1-04)
-# .dart_tool/ .flutter-plugins .pub/ build/ etc. no longer applicable
-# Dart/Flutter residue (kept for any leftover tooling files)
+# Flutter residue (app migrated to React Native Expo in T-E1-04)
 .dart_tool/
 .flutter-plugins-dependencies
 

@@ -42,8 +42,8 @@ import FamilyScreen from '../(tabs)/index';
 
 describe('FamilyScreen', () => {
   it('renders family member card', () => {
-    const { getByAccessibilityLabel } = render(<FamilyScreen />);
-    expect(getByAccessibilityLabel('Family member: Alice Smith')).toBeTruthy();
+    const { getByLabelText } = render(<FamilyScreen />);
+    expect(getByLabelText('Family member: Alice Smith')).toBeTruthy();
   });
 
   it('shows empty state when no members', () => {

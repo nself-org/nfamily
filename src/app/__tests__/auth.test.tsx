@@ -36,27 +36,27 @@ describe('AuthScreen', () => {
   });
 
   it('renders sign-in form', () => {
-    const { getByAccessibilityLabel } = render(<AuthScreen />);
-    expect(getByAccessibilityLabel('Server URL')).toBeTruthy();
-    expect(getByAccessibilityLabel('Email address')).toBeTruthy();
-    expect(getByAccessibilityLabel('Password')).toBeTruthy();
-    expect(getByAccessibilityLabel('Sign in')).toBeTruthy();
+    const { getByLabelText } = render(<AuthScreen />);
+    expect(getByLabelText('Server URL')).toBeTruthy();
+    expect(getByLabelText('Email address')).toBeTruthy();
+    expect(getByLabelText('Password')).toBeTruthy();
+    expect(getByLabelText('Sign in')).toBeTruthy();
   });
 
   it('shows validation error when fields are empty', async () => {
-    const { getByAccessibilityLabel, getByText } = render(<AuthScreen />);
-    fireEvent.press(getByAccessibilityLabel('Sign in'));
+    const { getByLabelText, getByText } = render(<AuthScreen />);
+    fireEvent.press(getByLabelText('Sign in'));
     await waitFor(() => {
       expect(getByText('All fields are required.')).toBeTruthy();
     });
   });
 
   it('calls signIn with correct args', async () => {
-    const { getByAccessibilityLabel } = render(<AuthScreen />);
-    fireEvent.changeText(getByAccessibilityLabel('Server URL'), 'https://test.example.com');
-    fireEvent.changeText(getByAccessibilityLabel('Email address'), 'user@test.com');
-    fireEvent.changeText(getByAccessibilityLabel('Password'), 'password123');
-    fireEvent.press(getByAccessibilityLabel('Sign in'));
+    const { getByLabelText } = render(<AuthScreen />);
+    fireEvent.changeText(getByLabelText('Server URL'), 'https://test.example.com');
+    fireEvent.changeText(getByLabelText('Email address'), 'user@test.com');
+    fireEvent.changeText(getByLabelText('Password'), 'password123');
+    fireEvent.press(getByLabelText('Sign in'));
     await waitFor(() => {
       expect(mockSignIn).toHaveBeenCalledWith(
         'https://test.example.com',
