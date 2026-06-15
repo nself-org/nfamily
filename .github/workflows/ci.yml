@@ -25,3 +25,29 @@ jobs:
         run: pnpm lint
       - name: Test
         run: pnpm test
+
+  # ─── Android debug build (Expo managed) ─────────────────────────
+  # Expo managed workflow — no native android/ directory; export validates
+  # the JS bundle can be built for Android without signing secrets.
+  # Release builds (EAS / Play Store) are handled by release.yml.
+  android-build:
+    name: Android · export bundle (Expo)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Export Android bundle (debug)
+        run: npx expo export --platform android
