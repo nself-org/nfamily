@@ -1,0 +1,59 @@
+{
+  "cli": {
+    "version": ">= 14.0.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "distribution": "store",
+      "ios": {
+        "bundleIdentifier": "com.nself.nfamily"
+      },
+      "android": {
+        "buildType": "app-bundle",
+        "applicationId": "com.nself.nfamily"
+      }
+    },
+    "bundle": {
+      "distribution": "store",
+      "env": {
+        "NSELF_BUNDLE": "nfamily"
+      },
+      "ios": {
+        "bundleIdentifier": "com.nself.nfamily.bundle"
+      },
+      "android": {
+        "buildType": "app-bundle",
+        "applicationId": "com.nself.nfamily.bundle"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "alisalaah@gmail.com",
+        "ascAppId": "",
+        "appleTeamId": ""
+      },
+      "android": {
+        "serviceAccountKeyPath": "../../.claude/keys/play-service-account.json",
+        "track": "internal"
+      }
+    }
+  }
+}
