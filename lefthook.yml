@@ -22,3 +22,7 @@ pre-push:
       run: pnpm exec tsc --noEmit
     test:
       run: pnpm test --passWithNoTests
+    ci-line-count-gate:
+      run: bash ../.github/ci-line-count-gate.sh
+    ci-stub-gate:
+      run: bash ../.github/ci-stub-gate.sh
