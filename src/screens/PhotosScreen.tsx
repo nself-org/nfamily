@@ -37,7 +37,7 @@ interface AlbumCardProps {
 
 function AlbumCard({ album, onPress }: AlbumCardProps): React.ReactElement {
   return (
-    <Pressable style={styles.albumCard} onPress={onPress} accessibilityRole="button">
+    <Pressable style={styles.albumCard} onPress={onPress} accessibilityRole="button" accessibilityLabel={`${album.title}, ${album.photoCount} photos`}>
       <View style={styles.albumCover}>
         <Text style={styles.albumCoverIcon}>📷</Text>
       </View>
@@ -79,11 +79,11 @@ function CreateAlbumModal({ visible, onSubmit, onClose }: CreateAlbumModalProps)
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onRequestClose={onClose}>
-      <View style={styles.modalContainer}>
+      <View style={styles.modalContainer} accessibilityViewIsModal={true}>
         <View style={styles.modalHeader}>
-          <Pressable onPress={onClose}><Text style={styles.modalCancel}>Cancel</Text></Pressable>
+          <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Cancel new album"><Text style={styles.modalCancel}>Cancel</Text></Pressable>
           <Text style={styles.modalTitle}>New Album</Text>
-          <Pressable onPress={handleSubmit} disabled={isSubmitting}>
+          <Pressable onPress={handleSubmit} disabled={isSubmitting} accessibilityRole="button" accessibilityLabel="Create album">
             {isSubmitting
               ? <ActivityIndicator color={BrandColors.primary} />
               : <Text style={styles.modalAction}>Create</Text>}
@@ -188,7 +188,7 @@ export function PhotosScreen({ onSelectAlbum }: Props): React.ReactElement {
   const handleUploadToAlbum = async (albumId: string) => {
     // expo-image-picker is available in Expo SDK 53; handle case where it's not linked
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
       const ImagePicker = require('expo-image-picker') as {
         requestMediaLibraryPermissionsAsync: () => Promise<{ status: string }>;
         launchImageLibraryAsync: (opts: unknown) => Promise<{

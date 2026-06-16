@@ -63,7 +63,7 @@ export function ScreenStateView({
         <Text style={styles.title}>You're offline</Text>
         <Text style={styles.label}>Changes will sync when you reconnect.</Text>
         {onRetry && (
-          <Pressable style={styles.button} onPress={onRetry}>
+          <Pressable style={styles.button} onPress={onRetry} accessibilityRole="button" accessibilityLabel="Retry">
             <Text style={styles.buttonText}>Retry</Text>
           </Pressable>
         )}
@@ -78,7 +78,7 @@ export function ScreenStateView({
         <Text style={styles.title}>Session expired</Text>
         <Text style={styles.label}>Please sign in again to continue.</Text>
         {onSignIn && (
-          <Pressable style={styles.button} onPress={onSignIn}>
+          <Pressable style={styles.button} onPress={onSignIn} accessibilityRole="button" accessibilityLabel="Sign in">
             <Text style={styles.buttonText}>Sign In</Text>
           </Pressable>
         )}
@@ -93,7 +93,7 @@ export function ScreenStateView({
         <Text style={styles.title}>Something went wrong</Text>
         <Text style={styles.label}>{errorMessage}</Text>
         {onRetry && (
-          <Pressable style={styles.button} onPress={onRetry}>
+          <Pressable style={styles.button} onPress={onRetry} accessibilityRole="button" accessibilityLabel="Try again">
             <Text style={styles.buttonText}>Try Again</Text>
           </Pressable>
         )}

@@ -136,9 +136,9 @@ function CreatePostModal({ visible, isOnline, onSubmit, onClose }: CreatePostMod
       presentationStyle="formSheet"
       onRequestClose={onClose}
     >
-      <View style={styles.modalContainer}>
+      <View style={styles.modalContainer} accessibilityViewIsModal={true}>
         <View style={styles.modalHeader}>
-          <Pressable onPress={onClose}>
+          <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Cancel new post">
             <Text style={styles.modalCancel}>Cancel</Text>
           </Pressable>
           <Text style={styles.modalTitle}>New Post</Text>
@@ -146,6 +146,7 @@ function CreatePostModal({ visible, isOnline, onSubmit, onClose }: CreatePostMod
             onPress={handleSubmit}
             disabled={isSubmitting}
             accessibilityLabel="Post"
+            accessibilityRole="button"
           >
             {isSubmitting ? (
               <ActivityIndicator color={BrandColors.primary} />
@@ -184,6 +185,9 @@ function CreatePostModal({ visible, isOnline, onSubmit, onClose }: CreatePostMod
               privacy === 'family_only' && styles.privacyActive,
             ]}
             onPress={() => setPrivacy('family_only')}
+            accessibilityRole="button"
+            accessibilityLabel="Visible to family only"
+            accessibilityState={{ selected: privacy === 'family_only' }}
           >
             <Text style={styles.privacyOptionText}>🔒 Family only</Text>
           </Pressable>
@@ -193,6 +197,9 @@ function CreatePostModal({ visible, isOnline, onSubmit, onClose }: CreatePostMod
               privacy === 'extended_family' && styles.privacyActive,
             ]}
             onPress={() => setPrivacy('extended_family')}
+            accessibilityRole="button"
+            accessibilityLabel="Visible to extended family"
+            accessibilityState={{ selected: privacy === 'extended_family' }}
           >
             <Text style={styles.privacyOptionText}>👥 Extended</Text>
           </Pressable>
@@ -435,6 +442,8 @@ export function SocialFeedScreen(): React.ReactElement {
             <Pressable
               style={styles.loadMoreBtn}
               onPress={() => void loadPosts()}
+              accessibilityRole="button"
+              accessibilityLabel="Load more posts"
             >
               <Text style={styles.loadMoreText}>Load more</Text>
             </Pressable>

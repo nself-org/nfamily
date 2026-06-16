@@ -167,7 +167,7 @@ export function GeniImportScreen({ oauthCode: initialCode, onDone }: Props): Rea
           {job.status === 'running' && (
             <>
               <ActivityIndicator color={BrandColors.primary} style={styles.spinner} />
-              <Pressable style={styles.cancelBtn} onPress={handleCancel}>
+              <Pressable style={styles.cancelBtn} onPress={handleCancel} accessibilityRole="button" accessibilityLabel="Cancel import">
                 <Text style={styles.cancelText}>Cancel</Text>
               </Pressable>
             </>
@@ -178,7 +178,7 @@ export function GeniImportScreen({ oauthCode: initialCode, onDone }: Props): Rea
           )}
 
           {job.status === 'done' && onDone && (
-            <Pressable style={styles.button} onPress={onDone}>
+            <Pressable style={styles.button} onPress={onDone} accessibilityRole="button" accessibilityLabel="View family tree">
               <Text style={styles.buttonText}>View Family Tree</Text>
             </Pressable>
           )}

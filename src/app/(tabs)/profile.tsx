@@ -72,7 +72,7 @@ export default function ProfileScreen(): React.ReactElement {
   if (subView === 'moderation') {
     return (
       <View style={styles.container}>
-        <Pressable style={styles.backRow} onPress={() => setSubView('main')}>
+        <Pressable style={styles.backRow} onPress={() => setSubView('main')} accessibilityRole="button" accessibilityLabel="Back to profile">
           <Text style={styles.backText}>← Profile</Text>
         </Pressable>
         <ModerationQueueScreen />
@@ -83,7 +83,7 @@ export default function ProfileScreen(): React.ReactElement {
   if (subView === 'health') {
     return (
       <View style={styles.container}>
-        <Pressable style={styles.backRow} onPress={() => setSubView('main')}>
+        <Pressable style={styles.backRow} onPress={() => setSubView('main')} accessibilityRole="button" accessibilityLabel="Back to profile">
           <Text style={styles.backText}>← Profile</Text>
         </Pressable>
         <MedicalConsentScreen />

@@ -1,0 +1,61 @@
+{
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "serverUrl": "عنوان URL للخادم"
+  },
+  "feed": {
+    "noActivity": "لا يوجد نشاط بعد",
+    "newPost": "منشور جديد",
+    "writePost": "ما الذي يدور في ذهنك؟",
+    "likePost": "إعجاب",
+    "commentPost": "تعليق",
+    "sharePost": "مشاركة"
+  },
+  "familyTree": {
+    "title": "شجرة العائلة",
+    "addMember": "إضافة فرد",
+    "importGedcom": "استيراد GEDCOM",
+    "importGeni": "استيراد من Geni",
+    "noMembers": "لا يوجد أفراد عائلة بعد"
+  },
+  "photos": {
+    "title": "الصور",
+    "addPhoto": "إضافة صورة",
+    "noPhotos": "لا توجد صور بعد",
+    "album": "ألبوم"
+  },
+  "chat": {
+    "title": "الدردشة",
+    "typeMessage": "اكتب رسالة...",
+    "send": "إرسال",
+    "noMessages": "لا توجد رسائل بعد"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "noNotifications": "لا توجد إشعارات بعد",
+    "markAllRead": "تعليم الكل كمقروء"
+  },
+  "profile": {
+    "editProfile": "تعديل الملف الشخصي",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "bio": "نبذة تعريفية",
+    "birthDate": "تاريخ الميلاد",
+    "saveProfile": "حفظ الملف الشخصي"
+  },
+  "invite": {
+    "title": "دعوة العائلة",
+    "inviteByEmail": "الدعوة عبر البريد الإلكتروني",
+    "copyLink": "نسخ رابط الدعوة",
+    "linkCopied": "تم نسخ الرابط!"
+  },
+  "moderation": {
+    "title": "قائمة الإشراف",
+    "approve": "موافقة",
+    "reject": "رفض",
+    "noItems": "لا يوجد شيء للمراجعة"
+  }
+}

@@ -25,6 +25,7 @@ export default function FeedTabScreen(): React.ReactElement {
           style={[styles.subTab, activeTab === 'social' && styles.subTabActive]}
           onPress={() => setActiveTab('social')}
           accessibilityRole="tab"
+          accessibilityLabel="Posts"
           accessibilityState={{ selected: activeTab === 'social' }}
         >
           <Text style={[styles.subTabText, activeTab === 'social' && styles.subTabTextActive]}>
@@ -35,6 +36,7 @@ export default function FeedTabScreen(): React.ReactElement {
           style={[styles.subTab, activeTab === 'activity' && styles.subTabActive]}
           onPress={() => setActiveTab('activity')}
           accessibilityRole="tab"
+          accessibilityLabel="Activity"
           accessibilityState={{ selected: activeTab === 'activity' }}
         >
           <Text style={[styles.subTabText, activeTab === 'activity' && styles.subTabTextActive]}>

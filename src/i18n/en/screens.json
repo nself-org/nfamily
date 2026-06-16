@@ -1,0 +1,61 @@
+{
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "serverUrl": "Server URL"
+  },
+  "feed": {
+    "noActivity": "No activity yet",
+    "newPost": "New post",
+    "writePost": "What's on your mind?",
+    "likePost": "Like",
+    "commentPost": "Comment",
+    "sharePost": "Share"
+  },
+  "familyTree": {
+    "title": "Family Tree",
+    "addMember": "Add member",
+    "importGedcom": "Import GEDCOM",
+    "importGeni": "Import from Geni",
+    "noMembers": "No family members yet"
+  },
+  "photos": {
+    "title": "Photos",
+    "addPhoto": "Add photo",
+    "noPhotos": "No photos yet",
+    "album": "Album"
+  },
+  "chat": {
+    "title": "Chat",
+    "typeMessage": "Type a message...",
+    "send": "Send",
+    "noMessages": "No messages yet"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "noNotifications": "No notifications yet",
+    "markAllRead": "Mark all as read"
+  },
+  "profile": {
+    "editProfile": "Edit profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "bio": "Bio",
+    "birthDate": "Birth date",
+    "saveProfile": "Save profile"
+  },
+  "invite": {
+    "title": "Invite Family",
+    "inviteByEmail": "Invite by email",
+    "copyLink": "Copy invite link",
+    "linkCopied": "Link copied!"
+  },
+  "moderation": {
+    "title": "Moderation Queue",
+    "approve": "Approve",
+    "reject": "Reject",
+    "noItems": "Nothing to review"
+  }
+}

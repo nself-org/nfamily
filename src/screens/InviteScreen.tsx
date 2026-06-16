@@ -140,7 +140,7 @@ export function InviteScreen({ onSuccess, onCancel }: Props): React.ReactElement
       </Pressable>
 
       {onCancel && (
-        <Pressable style={styles.cancelBtn} onPress={onCancel}>
+        <Pressable style={styles.cancelBtn} onPress={onCancel} accessibilityRole="button" accessibilityLabel="Cancel invitation">
           <Text style={styles.cancelText}>Cancel</Text>
         </Pressable>
       )}
