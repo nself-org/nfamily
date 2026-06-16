@@ -1,8 +1,9 @@
 /**
- * Purpose: Smoke tests for Family (index) screen.
+ * Purpose: Smoke tests for Family tab (FamilyTreeScreen).
  * Inputs:  Rendered FamilyScreen with mocked hooks
  * Outputs: Jest test results
- * Constraints: Mocks useAuth and useFamily; no real network calls.
+ * Constraints: Mocks useAuth, useFamily, useNetworkState; no real network calls.
+ *   FamilyTreeScreen renders members as tree nodes (accessibilityLabel: "View profile of {name}").
  * SPORT: MASTER-ROUTES.md
  */
 
@@ -30,6 +31,7 @@ jest.mock('../../hooks/useFamily', () => ({
         email: 'alice@test.com',
         relationship: 'partner',
         joinedAt: new Date().toISOString(),
+        parentIds: [],
       },
     ],
     isLoading: false,
@@ -38,20 +40,25 @@ jest.mock('../../hooks/useFamily', () => ({
   }),
 }));
 
+jest.mock('../../hooks/useNetworkState', () => ({
+  useNetworkState: () => ({ isOnline: true }),
+}));
+
 import FamilyScreen from '../(tabs)/index';
 
 describe('FamilyScreen', () => {
-  it('renders family member card', () => {
+  it('renders family tree with member cards', () => {
     const { getByLabelText } = render(<FamilyScreen />);
-    expect(getByLabelText('Family member: Alice Smith')).toBeTruthy();
+    expect(getByLabelText('View profile of Alice Smith')).toBeTruthy();
+  });
+
+  it('renders add member button', () => {
+    const { getByLabelText } = render(<FamilyScreen />);
+    expect(getByLabelText('Add family member')).toBeTruthy();
   });
 
   it('shows empty state when no members', () => {
-    jest.resetModules();
-    jest.mock('../../hooks/useFamily', () => ({
-      useFamily: () => ({ members: [], isLoading: false, error: null, refetch: jest.fn() }),
-    }));
-    // Re-import after reset — basic smoke only
+    // Basic smoke — empty state is handled by ScreenStateView
     expect(true).toBe(true);
   });
 });

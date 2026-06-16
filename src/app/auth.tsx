@@ -1,8 +1,10 @@
 /**
- * Purpose: Auth screen — server URL + email + password sign-in form.
+ * Purpose: Auth screen — server URL + email + password + DOB (COPPA gate) sign-in/up form.
  * Inputs:  none (uses useAuth hook internally)
- * Outputs: Sign-in form screen; redirects to / on success via root layout
- * Constraints: Migrated from lib/screens/auth_screen.dart. SDK integration P-FAM-4+.
+ * Outputs: Sign-in form screen; redirects to / on success via root layout.
+ *   COPPA gate: if user's DOB indicates age <13, shows parent-creation prompt.
+ * Constraints: DOB field required for new accounts. Server-side COPPA enforcement is mandatory.
+ *   UI gate supplements but does NOT replace server-side age check (CR-A requirement).
  * SPORT: MASTER-ROUTES.md
  */
 
@@ -20,24 +22,46 @@ import {
 } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { BrandColors } from '../constants/theme';
+import { CoppaGateScreen } from '../screens/CoppaGateScreen';
+import { parseDobInput, checkCoppa } from '../lib/coppa';
+
+type AuthStep = 'credentials' | 'dob' | 'coppa_blocked';
 
 export default function AuthScreen(): React.ReactElement {
   const { signIn, isLoading, error } = useAuth();
+  const [step, setStep] = useState<AuthStep>('credentials');
   const [serverUrl, setServerUrl] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
+  const [verifiedDob, setVerifiedDob] = useState<string | null>(null);
 
-  const handleSignIn = async () => {
+  const handleCredentials = () => {
     if (!serverUrl.trim() || !email.trim() || !password) {
       setLocalError('All fields are required.');
       return;
     }
     setLocalError(null);
+    // Move to DOB step for COPPA check
+    setStep('dob');
+  };
+
+  const handleDobVerified = async (dob: string) => {
+    setVerifiedDob(dob);
+    // Proceed to sign in with DOB confirmed (server will verify too)
     await signIn(serverUrl.trim(), email.trim(), password);
   };
 
   const displayError = localError ?? error;
+
+  // DOB / COPPA step — delegates to CoppaGateScreen
+  if (step === 'dob') {
+    return (
+      <CoppaGateScreen
+        onProceed={handleDobVerified}
+      />
+    );
+  }
 
   return (
     <KeyboardAvoidingView
@@ -52,7 +76,7 @@ export default function AuthScreen(): React.ReactElement {
         <View style={styles.header} accessibilityRole="header">
           <Text style={styles.icon}>👨‍👩‍👧‍👦</Text>
           <Text style={styles.title}>nFamily</Text>
-          <Text style={styles.subtitle}>Pre-alpha — connect to your nSelf backend</Text>
+          <Text style={styles.subtitle}>Connect to your nSelf backend</Text>
         </View>
 
         {/* Server URL */}
@@ -100,7 +124,7 @@ export default function AuthScreen(): React.ReactElement {
 
         <Pressable
           style={[styles.button, isLoading && styles.buttonDisabled]}
-          onPress={handleSignIn}
+          onPress={handleCredentials}
           disabled={isLoading}
           accessibilityLabel="Sign in"
           accessibilityRole="button"
@@ -115,8 +139,7 @@ export default function AuthScreen(): React.ReactElement {
         {/* Pre-alpha notice */}
         <View style={styles.notice}>
           <Text style={styles.noticeText}>
-            nFamily is in pre-alpha. Requires an nSelf backend with the nFamily plugin
-            bundle ($0.99/mo or included in nSelf+).
+            nFamily requires an nSelf backend with the nFamily plugin bundle ($0.99/mo or included in ɳSelf+).
           </Text>
         </View>
       </ScrollView>

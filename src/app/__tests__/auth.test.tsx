@@ -3,6 +3,8 @@
  * Inputs:  Rendered AuthScreen component
  * Outputs: Jest test results
  * Constraints: Mocks useAuth hook; does not exercise SecureStore I/O.
+ *   Note: Sign-in now has two steps — credentials -> COPPA DOB -> signIn.
+ *   These tests cover the credentials step; COPPA is tested in coppa.test.ts.
  * SPORT: MASTER-ROUTES.md
  */
 
@@ -35,7 +37,7 @@ describe('AuthScreen', () => {
     mockSignIn.mockClear();
   });
 
-  it('renders sign-in form', () => {
+  it('renders sign-in form with all required fields', () => {
     const { getByLabelText } = render(<AuthScreen />);
     expect(getByLabelText('Server URL')).toBeTruthy();
     expect(getByLabelText('Email address')).toBeTruthy();
@@ -51,18 +53,15 @@ describe('AuthScreen', () => {
     });
   });
 
-  it('calls signIn with correct args', async () => {
-    const { getByLabelText } = render(<AuthScreen />);
+  it('advances to COPPA DOB step when credentials are filled', async () => {
+    const { getByLabelText, getByText } = render(<AuthScreen />);
     fireEvent.changeText(getByLabelText('Server URL'), 'https://test.example.com');
     fireEvent.changeText(getByLabelText('Email address'), 'user@test.com');
     fireEvent.changeText(getByLabelText('Password'), 'password123');
     fireEvent.press(getByLabelText('Sign in'));
+    // After pressing Sign in with valid credentials, COPPA DOB screen appears
     await waitFor(() => {
-      expect(mockSignIn).toHaveBeenCalledWith(
-        'https://test.example.com',
-        'user@test.com',
-        'password123'
-      );
+      expect(getByText("What's your date of birth?")).toBeTruthy();
     });
   });
 });

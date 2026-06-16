@@ -1,66 +1,54 @@
 /**
- * Purpose: Family tab — lists all family members using FamilyCard.
- * Inputs:  auth state from useAuth, family members from useFamily
- * Outputs: Scrollable list of FamilyCard components with pull-to-refresh
- * Constraints: Empty state shown when no members. Refresh calls useFamily.refetch.
+ * Purpose: Family tab — family tree, member profiles, invite flow, Geni import.
+ * Inputs:  auth state from useAuth
+ * Outputs: FamilyTreeScreen with sub-navigation to Invite and Geni import
+ * Constraints: 7-state screen delegated to FamilyTreeScreen.
+ *   Plugins covered: family, family-geni.
  * SPORT: MASTER-ROUTES.md
  */
 
-import React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  RefreshControl,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import { useAuth } from '../../hooks/useAuth';
-import { useFamily } from '../../hooks/useFamily';
-import { FamilyCard } from '../../components/FamilyCard';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { BrandColors } from '../../constants/theme';
+import { FamilyTreeScreen } from '../../screens/FamilyTreeScreen';
+import { InviteScreen } from '../../screens/InviteScreen';
+import { GeniImportScreen } from '../../screens/GeniImportScreen';
+import type { FamilyMember } from '../../types';
+
+type FamilySubView = 'tree' | 'invite' | 'geni_import';
 
 export default function FamilyScreen(): React.ReactElement {
-  const { authState } = useAuth();
-  const { members, isLoading, error, refetch } = useFamily(
-    authState.serverUrl,
-    authState.token
-  );
+  const [subView, setSubView] = useState<FamilySubView>('tree');
+  const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(null);
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scroll}
-        refreshControl={
-          <RefreshControl
-            refreshing={isLoading}
-            onRefresh={refetch}
-            tintColor={BrandColors.primary}
-          />
-        }
-      >
-        {isLoading && members.length === 0 ? (
-          <ActivityIndicator
-            size="large"
-            color={BrandColors.primary}
-            style={styles.loader}
-          />
-        ) : error ? (
-          <Text style={styles.error}>{error}</Text>
-        ) : members.length === 0 ? (
-          <Text style={styles.empty}>No family members yet. Invite someone!</Text>
-        ) : (
-          members.map((m) => <FamilyCard key={m.id} member={m} />)
-        )}
-      </ScrollView>
+      {subView === 'tree' && (
+        <FamilyTreeScreen
+          onSelectMember={(m) => {
+            setSelectedMember(m);
+            // Future: navigate to MemberProfileScreen
+          }}
+          onInvite={() => setSubView('invite')}
+        />
+      )}
+
+      {subView === 'invite' && (
+        <InviteScreen
+          onSuccess={() => setSubView('tree')}
+          onCancel={() => setSubView('tree')}
+        />
+      )}
+
+      {subView === 'geni_import' && (
+        <GeniImportScreen
+          onDone={() => setSubView('tree')}
+        />
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: BrandColors.background },
-  scroll: { padding: 16 },
-  loader: { marginTop: 48 },
-  error: { color: BrandColors.error, textAlign: 'center', marginTop: 32 },
-  empty: { color: BrandColors.textSecondary, textAlign: 'center', marginTop: 48 },
 });

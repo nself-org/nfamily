@@ -32,11 +32,14 @@
 - Age check enforced in the auth signup webhook before the Hasura `insert_np_users` mutation fires
 - Parental consent flow is out of scope for v1.1.x (Option A hard-rejects; no consent path)
 
-### Companion App (v1.3.0)
+### Companion App (v1.3.0) — Shipped
 
-- Flutter signup screen enforces the same DOB entry + client-side pre-check
-- Client-side check is UX-only; backend gate is the authoritative enforcement
-- "You must be 13+" copy appears inline on the DOB picker if age is below threshold
+- React Native (Expo 53) signup flow with two-step credentials → DOB entry
+- `CoppaGateScreen` collects DOB (MM/DD/YYYY or YYYY-MM-DD) and calls `checkCoppa(dob)`
+- If age < 13: shows "Ask a Parent to Create Your Account" blocking screen — no account created
+- Client-side check is UX-only; backend gate (`COPPA_AGE_GATE_ENABLED=true`) is authoritative
+- Parent creates account and marks child as member — no standalone child accounts possible
+- Medical consent toggle in Profile → Health & Privacy settings (stored in `np_family_members.medical_consent_given`)
 
 ## What This Does NOT Cover
 
