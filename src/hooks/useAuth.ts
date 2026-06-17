@@ -20,7 +20,18 @@ const KEYS = {
 interface UseAuthReturn {
   authState: AuthState;
   isLoading: boolean;
-  signIn: (serverUrl: string, email: string, password: string) => Promise<void>;
+  /**
+   * Sign in / sign up against an nSelf backend.
+   * @param dateOfBirth ISO "YYYY-MM-DD" — transmitted so the server enforces the
+   *   COPPA age check authoritatively. The client UI gate (CoppaGateScreen) is a
+   *   convenience only and MUST NOT be the sole enforcement (CR-C HIGH-1).
+   */
+  signIn: (
+    serverUrl: string,
+    email: string,
+    password: string,
+    dateOfBirth: string
+  ) => Promise<void>;
   signOut: () => Promise<void>;
   error: string | null;
 }
@@ -54,12 +65,23 @@ export function useAuth(): UseAuthReturn {
   }, []);
 
   const signIn = useCallback(
-    async (serverUrl: string, email: string, _password: string) => {
+    async (
+      serverUrl: string,
+      email: string,
+      _password: string,
+      dateOfBirth: string
+    ) => {
       setIsLoading(true);
       setError(null);
       try {
-        // TODO(P-FAM-4): replace with NselfAuthClient.signIn(serverUrl, email, password)
-        // Placeholder simulates auth during scaffolding phase.
+        // COPPA: the DOB is sent to the backend so the server performs the
+        // authoritative age check. The client gate is bypassable, so server-side
+        // enforcement is mandatory before this account is created (CR-C HIGH-1).
+        // TODO(P-FAM-4): replace with
+        //   NselfAuthClient.signIn(serverUrl, email, password, { dateOfBirth })
+        // The real client MUST pass dateOfBirth so the nFamily plugin rejects
+        // under-13 standalone account creation server-side.
+        void dateOfBirth;
         await new Promise((r) => setTimeout(r, 500));
         const token = 'placeholder-token-p-fam-4';
 

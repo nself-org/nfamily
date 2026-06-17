@@ -23,7 +23,6 @@ import {
 import { useAuth } from '../hooks/useAuth';
 import { BrandColors } from '../constants/theme';
 import { CoppaGateScreen } from '../screens/CoppaGateScreen';
-import { parseDobInput, checkCoppa } from '../lib/coppa';
 
 type AuthStep = 'credentials' | 'dob' | 'coppa_blocked';
 
@@ -48,8 +47,9 @@ export default function AuthScreen(): React.ReactElement {
 
   const handleDobVerified = async (dob: string) => {
     setVerifiedDob(dob);
-    // Proceed to sign in with DOB confirmed (server will verify too)
-    await signIn(serverUrl.trim(), email.trim(), password);
+    // Proceed to sign in, transmitting the DOB so the backend enforces the
+    // COPPA age check authoritatively (the client gate alone is bypassable).
+    await signIn(serverUrl.trim(), email.trim(), password, dob);
   };
 
   const displayError = localError ?? error;
