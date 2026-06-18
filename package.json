@@ -63,7 +63,13 @@
   },
   "pnpm": {
     "overrides": {
-      "@xmldom/xmldom": ">=0.8.13"
+      "@xmldom/xmldom": ">=0.8.13",
+      "postcss": ">=8.5.15",
+      "joi": ">=17.13.4",
+      "form-data@>=4.0.0": ">=4.0.6",
+      "uuid": ">=11.1.1",
+      "fast-xml-parser": ">=5.7.0",
+      "js-yaml": ">=4.2.0"
     }
   }
 }
