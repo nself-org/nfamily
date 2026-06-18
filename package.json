@@ -14,14 +14,6 @@
   "dependencies": {
     "@apollo/client": "^3.9.0",
     "@expo/vector-icons": "^14.1.0",
-    "@nself/auth-core": "workspace:*",
-    "@nself/errors": "workspace:*",
-    "@nself/graphql-client": "workspace:*",
-    "@nself/i18n": "workspace:*",
-    "@nself/native-bridge": "workspace:*",
-    "@nself/observability": "workspace:*",
-    "@nself/push-client": "workspace:*",
-    "@nself/types": "workspace:*",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/native": "^7.1.6",
     "@sentry/react-native": "^6.22.0",
@@ -59,7 +51,12 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!.*node_modules)(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@nself/i18n$": "<rootDir>/src/__mocks__/nself-i18n.ts",
+      "^@nself/observability$": "<rootDir>/src/__mocks__/nself-observability.ts",
+      "^@nself/(.*)$": "<rootDir>/src/__mocks__/nself-generic.ts"
+    }
   },
   "pnpm": {
     "overrides": {

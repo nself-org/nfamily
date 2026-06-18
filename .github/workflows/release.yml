@@ -6,91 +6,64 @@ on:
       - 'v*.*.*'
 
 jobs:
-  # ── Android ────────────────────────────────────────────────────────────────
-  release-android:
-    name: Release Android AAB
+  # ── GitHub Release ──────────────────────────────────────────────────────────
+  github-release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: softprops/action-gh-release@v2
         with:
-          flutter-version: '3.24.0'
-          cache: true
-      - run: flutter pub get
+          generate_release_notes: true
 
-      - name: Decode upload keystore
-        run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
-
-      - name: Build release AAB
-        run: flutter build appbundle --release
+  # ── Android (EAS) ──────────────────────────────────────────────────────────
+  # Requires secret: EXPO_TOKEN (from expo.dev account settings)
+  # Until EXPO_TOKEN is set, this job fails at the EAS build step.
+  # Set via: gh secret set EXPO_TOKEN --repo nself-org/nfamily
+  release-android:
+    name: Release Android (EAS)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install EAS CLI
+        run: pnpm add -g eas-cli
+      - name: Build Android (EAS)
+        run: eas build --platform android --profile production --non-interactive --no-wait
         env:
-          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Upload to Google Play (internal track)
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: org.nself.nfamily
-          releaseFiles: build/app/outputs/bundle/release/*.aab
-          track: internal
-
-  # ── iOS ────────────────────────────────────────────────────────────────────
+  # ── iOS (EAS) ──────────────────────────────────────────────────────────────
+  # Requires secret: EXPO_TOKEN
+  # Apple signing credentials are managed in EAS (not GitHub secrets).
+  # Set via: gh secret set EXPO_TOKEN --repo nself-org/nfamily
   release-ios:
-    name: Release iOS IPA (TestFlight)
-    runs-on: macos-latest
-    timeout-minutes: 30
+    name: Release iOS (EAS)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: actions/setup-node@v4
         with:
-          flutter-version: '3.24.0'
-          cache: true
-      - run: flutter pub get
-
-      - name: Build iOS
-        run: flutter build ipa --release --export-options-plist ios/ExportOptions.plist
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install EAS CLI
+        run: pnpm add -g eas-cli
+      - name: Build iOS (EAS)
+        run: eas build --platform ios --profile production --non-interactive --no-wait
         env:
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-
-      - name: Upload to TestFlight
-        run: |
-          xcrun altool --upload-app \
-            --type ios \
-            --file build/ios/ipa/*.ipa \
-            --apiKey "${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}" \
-            --apiIssuer "${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}"
-
-  # ── macOS ─────────────────────────────────────────────────────────────────
-  release-macos:
-    name: Release macOS DMG
-    runs-on: macos-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.0'
-          cache: true
-      - run: flutter pub get
-
-      - name: Build macOS
-        run: flutter build macos --release
-
-      - name: Create DMG
-        run: |
-          npm install -g create-dmg
-          create-dmg \
-            'build/macos/Build/Products/Release/nFamily.app' \
-            'build/macos/' \
-            --overwrite \
-            --dmg-title 'nFamily' || true
-          mv build/macos/*.dmg "nfamily-${{ github.ref_name }}-macos.dmg" || true
-
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: nfamily-${{ github.ref_name }}-macos.dmg
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
