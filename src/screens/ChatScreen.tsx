@@ -1,5 +1,6 @@
 /**
  * Purpose: Family group chat screen — send/receive text + photos via nchat plugin.
+ *          Bubble component extracted to ChatBubble.tsx.
  * Inputs:  auth state; Hasura subscription on np_chat_messages (family room)
  * Outputs: Live-updating chat thread; send message via mutation
  * Constraints: 7-state screen. Text + photo messages. Room = family-level group chat.
@@ -24,31 +25,8 @@ import { BrandColors } from '../constants/theme';
 import { ScreenStateView } from '../components/ScreenStateView';
 import { useAuth } from '../hooks/useAuth';
 import { useNetworkState } from '../hooks/useNetworkState';
+import { Bubble } from './ChatBubble';
 import type { ChatMessage, ScreenState } from '../types';
-
-interface BubbleProps {
-  message: ChatMessage;
-  isMe: boolean;
-}
-
-function Bubble({ message, isMe }: BubbleProps): React.ReactElement {
-  return (
-    <View style={[styles.bubble, isMe ? styles.bubbleMe : styles.bubbleThem]}>
-      {!isMe && (
-        <Text style={styles.bubbleSender}>{message.senderName}</Text>
-      )}
-      {message.photoUrl && (
-        <Text style={styles.photoPlaceholder}>📷 Photo</Text>
-      )}
-      <Text style={[styles.bubbleText, isMe && styles.bubbleTextMe]}>
-        {message.content}
-      </Text>
-      <Text style={styles.bubbleTime}>
-        {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-      </Text>
-    </View>
-  );
-}
 
 export function ChatScreen(): React.ReactElement {
   const { authState } = useAuth();
@@ -257,25 +235,6 @@ const styles = StyleSheet.create({
   },
   scroll: { flex: 1 },
   scrollContent: { padding: 12, paddingBottom: 8 },
-  bubble: {
-    maxWidth: '78%',
-    borderRadius: 16,
-    padding: 10,
-    marginBottom: 8,
-  },
-  bubbleThem: {
-    alignSelf: 'flex-start',
-    backgroundColor: BrandColors.surface,
-  },
-  bubbleMe: {
-    alignSelf: 'flex-end',
-    backgroundColor: BrandColors.primary,
-  },
-  bubbleSender: { color: BrandColors.primary, fontSize: 11, fontWeight: '600', marginBottom: 2 },
-  bubbleText: { color: BrandColors.textPrimary, fontSize: 14, lineHeight: 19 },
-  bubbleTextMe: { color: '#fff' },
-  photoPlaceholder: { color: BrandColors.textSecondary, fontSize: 12, marginBottom: 4 },
-  bubbleTime: { color: BrandColors.textSecondary, fontSize: 10, marginTop: 4, textAlign: 'right' },
   inputBar: {
     flexDirection: 'row',
     alignItems: 'flex-end',
