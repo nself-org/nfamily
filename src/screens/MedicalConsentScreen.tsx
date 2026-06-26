@@ -1,5 +1,6 @@
 /**
  * Purpose: Medical consent settings screen — toggle for health data sharing within family.
+ *          ConsentModal extracted to ConsentModal.tsx to keep this file under 300 lines.
  * Inputs:  auth state; current consent state from np_family_members.medical_consent_given
  * Outputs: Updated consent flag via Hasura mutation; stored in np_family_members
  * Constraints: Clear disclosure of what data is shared, who sees it, and how to revoke.
@@ -11,92 +12,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
-  Pressable,
   ScrollView,
   Switch,
   StyleSheet,
   Alert,
   ActivityIndicator,
-  Modal,
 } from 'react-native';
 import { BrandColors } from '../constants/theme';
 import { toFamilyError } from '../lib/errors';
 import { useAuth } from '../hooks/useAuth';
-
-interface ConsentModalProps {
-  visible: boolean;
-  onAccept: () => void;
-  onDecline: () => void;
-}
-
-function ConsentModal({ visible, onAccept, onDecline }: ConsentModalProps): React.ReactElement {
-  return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      presentationStyle="formSheet"
-      onRequestClose={onDecline}
-    >
-      <ScrollView
-        style={styles.modalContainer}
-        contentContainerStyle={styles.modalScroll}
-      >
-        <Text style={styles.modalTitle}>Health Data Sharing</Text>
-        <Text style={styles.modalSubtitle}>Before you enable this, please read:</Text>
-
-        <View style={styles.disclosureSection}>
-          <Text style={styles.disclosureHeading}>What data is shared?</Text>
-          <Text style={styles.disclosureText}>
-            Health milestones and notes you explicitly add to your family profile —
-            for example, medical conditions you choose to share, medication reminders,
-            and wellness check-ins.
-          </Text>
-        </View>
-
-        <View style={styles.disclosureSection}>
-          <Text style={styles.disclosureHeading}>Who can see it?</Text>
-          <Text style={styles.disclosureText}>
-            Only family members you have explicitly added to your family group.
-            Third parties, advertisers, and nSelf staff cannot access this data.
-          </Text>
-        </View>
-
-        <View style={styles.disclosureSection}>
-          <Text style={styles.disclosureHeading}>How do I revoke?</Text>
-          <Text style={styles.disclosureText}>
-            You can disable health data sharing at any time in Settings → Health & Privacy.
-            Disabling removes shared data from other family members' views immediately.
-          </Text>
-        </View>
-
-        <View style={styles.disclosureSection}>
-          <Text style={styles.disclosureHeading}>Data storage</Text>
-          <Text style={styles.disclosureText}>
-            All data is stored on your self-hosted nSelf instance. nSelf Inc. never
-            has access to your health information.
-          </Text>
-        </View>
-
-        <View style={styles.modalActions}>
-          <Pressable
-            style={styles.declineBtn}
-            onPress={onDecline}
-            accessibilityLabel="Decline health data sharing"
-          >
-            <Text style={styles.declineBtnText}>Decline</Text>
-          </Pressable>
-          <Pressable
-            style={styles.acceptBtn}
-            onPress={onAccept}
-            accessibilityLabel="Enable health data sharing"
-          >
-            <Text style={styles.acceptBtnText}>I Understand — Enable</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </Modal>
-  );
-}
+import { ConsentModal } from './ConsentModal';
 
 export function MedicalConsentScreen(): React.ReactElement {
   const { authState } = useAuth();
@@ -289,29 +214,4 @@ const styles = StyleSheet.create({
   },
   infoTitle: { color: BrandColors.textPrimary, fontSize: 14, fontWeight: '600', marginBottom: 8 },
   infoText: { color: BrandColors.textSecondary, fontSize: 13, lineHeight: 19 },
-  // Modal
-  modalContainer: { flex: 1, backgroundColor: BrandColors.background },
-  modalScroll: { padding: 24, paddingBottom: 40 },
-  modalTitle: { color: BrandColors.textPrimary, fontSize: 22, fontWeight: '700', marginBottom: 6 },
-  modalSubtitle: { color: BrandColors.textSecondary, fontSize: 14, marginBottom: 20 },
-  disclosureSection: { marginBottom: 20 },
-  disclosureHeading: { color: BrandColors.textPrimary, fontSize: 14, fontWeight: '600', marginBottom: 6 },
-  disclosureText: { color: BrandColors.textSecondary, fontSize: 14, lineHeight: 20 },
-  modalActions: { flexDirection: 'row', gap: 10, marginTop: 24 },
-  declineBtn: {
-    flex: 1,
-    backgroundColor: BrandColors.surface,
-    borderRadius: 10,
-    paddingVertical: 13,
-    alignItems: 'center',
-  },
-  declineBtnText: { color: BrandColors.textSecondary, fontWeight: '600', fontSize: 15 },
-  acceptBtn: {
-    flex: 2,
-    backgroundColor: BrandColors.primary,
-    borderRadius: 10,
-    paddingVertical: 13,
-    alignItems: 'center',
-  },
-  acceptBtnText: { color: '#fff', fontWeight: '700', fontSize: 15 },
 });
