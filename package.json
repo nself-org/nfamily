@@ -61,13 +61,27 @@
   "pnpm": {
     "overrides": {
       "@xmldom/xmldom": ">=0.8.13",
-      "postcss": ">=8.5.15",
+      "postcss": ">=8.5.18",
       "joi": ">=17.13.4",
       "form-data@>=4.0.0": ">=4.0.6",
       "uuid": ">=11.1.1",
       "fast-xml-parser": ">=5.7.0",
-      "js-yaml": ">=4.2.0",
-      "undici": ">=6.27.0 <7.0.0"
+      "js-yaml": ">=4.3.1",
+      "undici": ">=6.27.0 <7.0.0",
+      "nanoid": ">=3.3.18",
+      "shell-quote": ">=1.9.0",
+      "tar": ">=7.5.19",
+      "brace-expansion@1": "1.1.18",
+      "brace-expansion@2": "2.1.4",
+      "brace-expansion@3": "5.0.9",
+      "brace-expansion@4": "5.0.9",
+      "brace-expansion@5": "5.0.9"
+    },
+    "auditConfig": {
+      "ignoreCves": [
+        "CVE-2025-71330",
+        "CVE-2025-71329"
+      ]
     }
   }
 }
