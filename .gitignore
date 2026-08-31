@@ -97,3 +97,7 @@ docker-compose.override.yml
 
 expo-env.d.ts
 # @end expo-cli
+backend/docker-compose.yml
+backend/docker-compose.override.yml
+*.generated.env
+**/*.gen.yml
