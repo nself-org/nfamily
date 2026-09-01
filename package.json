@@ -1,6 +1,7 @@
 {
   "name": "nfamily",
   "version": "0.1.3",
+  "license": "MIT",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
