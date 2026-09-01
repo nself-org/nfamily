@@ -3,8 +3,14 @@ name: JS Coverage Gate (nfamily)
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - '.github/ISSUE_TEMPLATE/**'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - '.github/ISSUE_TEMPLATE/**'
 
 env:
   COVERAGE_FLOOR: 30
