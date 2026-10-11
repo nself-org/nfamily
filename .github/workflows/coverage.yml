@@ -31,9 +31,8 @@ jobs:
         with:
           node-version: '20'
 
+      # pnpm version comes from packageManager in package.json (D-0568).
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

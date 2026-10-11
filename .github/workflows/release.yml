@@ -31,9 +31,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: '20'
+      # pnpm version comes from packageManager in package.json (D-0568).
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install EAS CLI
@@ -56,9 +55,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: '20'
+      # pnpm version comes from packageManager in package.json (D-0568).
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install EAS CLI
