@@ -52,7 +52,7 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!.*node_modules)(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+      "node_modules/(?!.*node_modules)(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|decode-uri-component)"
     ],
     "moduleNameMapper": {
       "^@nself/i18n$": "<rootDir>/src/__mocks__/nself-i18n.ts",
@@ -83,6 +83,7 @@
       "source-map-js": ">=1.2.2",
       "compression": ">=1.8.2",
       "decode-uri-component": ">=0.5.0",
+      "glob@10": ">=14.0.2 <15",
       "node-forge": ">=1.4.1"
     },
     "auditConfig": {
@@ -94,6 +95,9 @@
         "CVE-2025-71330",
         "CVE-2025-71329"
       ]
+    },
+    "patchedDependencies": {
+      "query-string@7.1.3": "patches/query-string@7.1.3.patch"
     }
   }
 }
