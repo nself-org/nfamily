@@ -2,6 +2,7 @@
 // decode-uri-component, which is ESM from 0.5.x; pnpm patches/query-string@7.1.3.patch
 // makes it read the default export. Without the patch parse() throws
 // "decodeComponent is not a function" (breaks @react-navigation deep links).
+// eslint-disable-next-line @typescript-eslint/no-var-requires -- transitive package, it has no direct import here
 const queryString = require('query-string');
 
 describe('query-string with patched decode-uri-component', () => {
